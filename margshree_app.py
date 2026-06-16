@@ -58,7 +58,7 @@ st.markdown("""
         border-radius: 1.5rem;
         box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         max-width: 1000px;
-        margin: 0 auto;
+        margin: 0 auto 2rem auto;
     }
     
     .ride-card {
@@ -204,13 +204,18 @@ if 'user_role' not in st.session_state:
 
 # Hero Section (Home Page)
 if st.session_state.current_page == "home":
+    # Hero Banner
     st.markdown("""
     <div class="hero-section">
         <h1 class="hero-title">🚌 Margshree</h1>
         <p class="hero-subtitle">India's Most Trusted Ride Sharing Platform • Car • Bus • Auto • Bike</p>
-        
-        <div class="search-container">
-            <h3 style="text-align: center; color: #1e293b; margin-bottom: 1.5rem; font-size: 1.75rem; font-weight: 700;">Find Your Perfect Ride</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Search Container
+    st.markdown("""
+    <div class="search-container">
+        <h3 style="text-align: center; color: #1e293b; margin-bottom: 1.5rem; font-size: 1.75rem; font-weight: 700;">Find Your Perfect Ride</h3>
     """, unsafe_allow_html=True)
     
     # Search Form
@@ -224,7 +229,8 @@ if st.session_state.current_page == "home":
     with col4:
         vehicle_filter = st.selectbox("Vehicle", ["All"] + [vt[0] for vt in VEHICLE_TYPES], key="home_vehicle")
     
-    st.markdown("</div>", unsafe_allow_html=True)
+    # Close search container in a better way
+    st.markdown("<br>", unsafe_allow_html=True)
     
     # Role Selection
     st.markdown("<div style='margin-top: 3rem;'>", unsafe_allow_html=True)
@@ -593,5 +599,4 @@ st.markdown("""
     <p style='opacity: 0.6; font-size: 0.875rem;'>Made with ❤️ in India • © 2026 Margshree</p>
 </div>
 """, unsafe_allow_html=True)
-
 
