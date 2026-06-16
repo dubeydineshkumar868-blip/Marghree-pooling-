@@ -146,7 +146,7 @@ st.markdown("""
 # Generate fake ride data
 def generate_fake_rides():
     ride_types = ["Car", "Bus", "Battery Rickshaw"]
-    cities = ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"]
+    cities = ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Noida", "Mainpuri"]
     # Fallback driver names if Faker is not available
     driver_names = ["Rajesh Kumar", "Suresh Singh", "Amit Sharma", "Priya Patel", 
                     "Rahul Verma", "Anita Gupta", "Vikram Singh", "Neha Reddy"]
@@ -191,7 +191,7 @@ def generate_fake_rides():
 
 # Generate fake ride requests (for drivers)
 def generate_fake_ride_requests():
-    cities = ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"]
+    cities = ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Noida", "Mainpuri"]
     # Fallback rider names if Faker is not available
     rider_names = ["Arjun Mehta", "Riya Kapoor", "Karan Joshi", "Ananya Iyer",
                    "Siddharth Rao", "Pooja Desai", "Rohit Nair", "Ishita Saxena"]
@@ -297,13 +297,15 @@ else:
         if rider_page == "Find Rides":
             st.markdown("## 🔍 Find Your Perfect Ride")
             
-            col1, col2, col3 = st.columns(3)
+            col1, col2, col3, col4 = st.columns(4)
             with col1:
                 ride_type_filter = st.selectbox("Vehicle Type", ["All", "Car", "Bus", "Battery Rickshaw"])
             with col2:
-                from_city = st.selectbox("From City", ["Any", "Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"])
+                from_city = st.selectbox("From City", ["Any", "Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Noida", "Mainpuri"])
             with col3:
-                max_price = st.slider("Max Price (₹)", 50, 2000, 1000)
+                to_city = st.selectbox("To City", ["Any", "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Mainpuri", "Noida"])
+            with col4:
+                max_price = st.slider("Max Price (₹)", 50, 5000, 1000)
             
             filtered_rides = st.session_state.rides.copy()
             
@@ -312,6 +314,9 @@ else:
             
             if from_city != "Any":
                 filtered_rides = filtered_rides[filtered_rides["from"] == from_city]
+            
+            if to_city != "Any":
+                filtered_rides = filtered_rides[filtered_rides["to"] == to_city]
             
             filtered_rides = filtered_rides[filtered_rides["price"] <= max_price]
             
@@ -376,8 +381,8 @@ else:
             col1, col2 = st.columns(2)
             with col1:
                 rider_name = st.text_input("Your Name", value=st.session_state.current_user if st.session_state.current_user != "Guest Rider" else "")
-                from_city = st.selectbox("From City", ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"])
-                to_city = st.selectbox("To City", ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"])
+                from_city = st.selectbox("From City", ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Noida", "Mainpuri"])
+                to_city = st.selectbox("To City", ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Mainpuri", "Noida"])
             
             with col2:
                 date = st.date_input("Date of Journey", datetime.now())
@@ -421,7 +426,7 @@ else:
             
             with col2:
                 vehicle_number = st.text_input("Vehicle Number")
-                city = st.selectbox("Your City", ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"])
+                city = st.selectbox("Your City", ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Noida", "Mainpuri"])
             
             if st.button("Register as Driver"):
                 if driver_name and phone and vehicle_number:
@@ -452,9 +457,9 @@ else:
                 
                 col1, col2 = st.columns(2)
                 with col1:
-                    from_city_filter = st.selectbox("From City", ["Any", "Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"])
+                    from_city_filter = st.selectbox("From City", ["Any", "Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Noida", "Mainpuri"])
                 with col2:
-                    to_city_filter = st.selectbox("To City", ["Any", "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"])
+                    to_city_filter = st.selectbox("To City", ["Any", "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Mainpuri", "Noida"])
                 
                 filtered_requests = st.session_state.ride_requests.copy()
                 
@@ -516,8 +521,8 @@ else:
                 col1, col2 = st.columns(2)
                 with col1:
                     ride_type = st.selectbox("Vehicle Type", ["Car", "Bus", "Battery Rickshaw"])
-                    from_city = st.selectbox("From City", ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"])
-                    to_city = st.selectbox("To City", ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"])
+                    from_city = st.selectbox("From City", ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Noida", "Mainpuri"])
+                    to_city = st.selectbox("To City", ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad", "Mainpuri", "Noida"])
                 
                 with col2:
                     date = st.date_input("Date of Journey", datetime.now())
