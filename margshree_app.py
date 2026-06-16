@@ -476,9 +476,9 @@ else:
 
 # Footer
 st.markdown("""
-<div style="text-align: center; padding: 3rem 2rem; margin-top: 4rem; background: #1e1b4b; color: white; border-radius: 2rem 2rem 0 0;">
-    <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">🚌 Margshree</h3>
-    <p style="opacity: 0.8; margin-bottom: 0.5rem;">India's Most Trusted Ride Sharing Platform</p>
-    <p style="opacity: 0.6; font-size: 0.875rem;">Made with ❤️ in India • © 2026 Margshree</p>
+<div style="text-align: center; padding: 3rem 2rem; margin-top: 4rem; background: #1e1b4b; border-radius: 2rem 2rem 0 0;">
+    <h3 style="margin-bottom: 1rem; font-size: 1.5rem; color: white !important;">🚌 Margshree</h3>
+    <p style="color: rgba(255, 255, 255, 0.9) !important; margin-bottom: 0.5rem;">India's Most Trusted Ride Sharing Platform</p>
+    <p style="color: rgba(255, 255, 255, 0.7) !important; font-size: 0.875rem;">Made with ❤️ in India • © 2026 Margshree</p>
 </div>
 """, unsafe_allow_html=True)
