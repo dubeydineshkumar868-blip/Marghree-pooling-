@@ -2,10 +2,14 @@ import streamlit as st
 import pandas as pd
 import random
 from datetime import datetime, timedelta
-from faker import Faker
 
-# Initialize Faker
-fake = Faker('en_IN')
+# Try to import Faker, if not available use fallback
+try:
+    from faker import Faker
+    fake = Faker('en_IN')
+    FAKER_AVAILABLE = True
+except ImportError:
+    FAKER_AVAILABLE = False
 
 # Set page configuration
 st.set_page_config(
@@ -143,9 +147,12 @@ st.markdown("""
 def generate_fake_rides():
     ride_types = ["Car", "Bus", "Battery Rickshaw"]
     cities = ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"]
+    # Fallback driver names if Faker is not available
+    driver_names = ["Rajesh Kumar", "Suresh Singh", "Amit Sharma", "Priya Patel", 
+                    "Rahul Verma", "Anita Gupta", "Vikram Singh", "Neha Reddy"]
     
     rides = []
-    for _ in range(12):
+    for i in range(12):
         ride_type = random.choice(ride_types)
         from_city = random.choice(cities)
         to_city = random.choice([c for c in cities if c != from_city])
@@ -162,8 +169,14 @@ def generate_fake_rides():
             seats = random.randint(2, 3)
             price = random.randint(50, 200)
         
+        # Get driver name
+        if FAKER_AVAILABLE:
+            driver_name = fake.name()
+        else:
+            driver_name = driver_names[i % len(driver_names)]
+        
         rides.append({
-            "driver": fake.name(),
+            "driver": driver_name,
             "ride_type": ride_type,
             "from": from_city,
             "to": to_city,
@@ -179,16 +192,25 @@ def generate_fake_rides():
 # Generate fake ride requests (for drivers)
 def generate_fake_ride_requests():
     cities = ["Delhi", "Mumbai", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad"]
+    # Fallback rider names if Faker is not available
+    rider_names = ["Arjun Mehta", "Riya Kapoor", "Karan Joshi", "Ananya Iyer",
+                   "Siddharth Rao", "Pooja Desai", "Rohit Nair", "Ishita Saxena"]
     
     requests = []
-    for _ in range(8):
+    for i in range(8):
         from_city = random.choice(cities)
         to_city = random.choice([c for c in cities if c != from_city])
         date = datetime.now() + timedelta(days=random.randint(0, 7))
         time = f"{random.randint(6, 22):02d}:{random.choice(['00', '15', '30', '45'])}"
         
+        # Get rider name
+        if FAKER_AVAILABLE:
+            rider_name = fake.name()
+        else:
+            rider_name = rider_names[i % len(rider_names)]
+        
         requests.append({
-            "rider": fake.name(),
+            "rider": rider_name,
             "from": from_city,
             "to": to_city,
             "date": date.strftime("%d %B %Y"),
@@ -574,3 +596,4 @@ st.markdown("""
     <p>Made with ❤️ in India | Margshree © 2026</p>
 </div>
 """, unsafe_allow_html=True)
+
