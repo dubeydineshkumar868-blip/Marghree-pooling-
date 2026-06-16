@@ -1,0 +1,4 @@
+streamlit
+pandas
+Pillow
+faker  # For generating fake data (testing)
