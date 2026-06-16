@@ -107,6 +107,33 @@ st.markdown("""
         margin-bottom: 1.5rem;
     }
     .vehicle-icon { font-size: 1.5rem; margin-right: 0.5rem; }
+    
+    /* Fix login/signup text colors */
+    .role-card div, .role-card h3, .role-card p,
+    [data-testid="stTabs"] button,
+    [data-testid="stTextInput"] label,
+    [data-testid="stNumberInput"] label,
+    [data-testid="stSelectbox"] label,
+    [data-testid="stRadio"] label,
+    [data-testid="stDateInput"] label,
+    [data-testid="stTimeInput"] label,
+    [data-testid="stTextInput"] input,
+    [data-testid="stNumberInput"] input,
+    [data-testid="stSelectbox"] div,
+    [data-testid="stRadio"] div,
+    .stTabs,
+    .stMarkdown h3,
+    .stMarkdown p {
+        color: #1e293b !important;
+    }
+    
+    /* Ensure input fields have proper contrast */
+    [data-testid="stTextInput"] input,
+    [data-testid="stNumberInput"] input,
+    [data-testid="stSelectbox"] div[data-baseweb="select"] {
+        background-color: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
